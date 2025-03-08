@@ -88,7 +88,7 @@ export default function CreateForm() {
 			if (!response.ok) throw new Error('Erro ao enviar formulário');
 	
 			const responseData = await response.json();
-			router.push(`/confirmacao?pagina_id=${responseData.page_id}`);
+			router.push(`/confirmacao?page_id=${responseData.page_id}`);
 		} catch (error) {
 			console.error(error);
 		}
