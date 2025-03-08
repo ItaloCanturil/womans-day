@@ -17,7 +17,6 @@ export default function Confirm() {
     if (page_id) {
       const url = `${window.location.origin}/${page_id}`;
       setFullUrl(url);
-      console.log("🚀 ~ useEffect ~ url:", url)
     }
   }, [page_id]);
 
