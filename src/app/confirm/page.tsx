@@ -1,13 +1,12 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { QRCodeSVG } from 'qrcode.react';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function Confirm() {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const page_id = searchParams.get('page_id'); // Obtém o parâmetro da URL
   console.log("🚀 ~ Confirm ~ page_id:", page_id)

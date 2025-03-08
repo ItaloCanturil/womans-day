@@ -22,7 +22,7 @@ import { CloudUpload, Paperclip } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
-import { supabase, supabaseService } from "@/db/supabase";
+import { supabaseService } from "@/db/supabase";
 
 const createFormSchema = z.object({
 	email: z.string().email({ message: "Email inválido" }),

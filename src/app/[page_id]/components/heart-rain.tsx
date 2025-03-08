@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 export default function HeartRain() {
 	useEffect(() => {
-		const heartCount = 50;
 		const body = document.body;
 		const heartStyles = `
       @keyframes fall {
