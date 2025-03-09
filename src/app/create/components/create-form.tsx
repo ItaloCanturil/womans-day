@@ -50,7 +50,7 @@ export default function CreateForm() {
 		resolver: zodResolver(createFormSchema),
 	});
 
-	const onSubmit = async (data) => {
+	const onSubmit = async (data: FormSchema) => {
 		try {
 			const photo_urls: string[] = [];
 
@@ -76,7 +76,6 @@ export default function CreateForm() {
 				message: data.message,
 				photo_urls: photo_urls
 			}
-			console.log("🚀 ~ onSubmit ~ formData:", formData)
 			const response = await fetch('/api/submit', {
 				method: 'POST',
 				headers: {
