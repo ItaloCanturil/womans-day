@@ -1,9 +1,10 @@
-import Message from "./components/message";
-import ScratchCard from "./components/scratch-card";
 import { supabase } from "@/db/supabase";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import HeartRain from "./components/heart-rain";
+import { AnimatedText } from "./components/animated-text";
+
+type PageParams = Promise<{page_id: string}>;
 
 async function getData(page_id: string) {
   const { data, error } = await supabase
@@ -16,8 +17,11 @@ async function getData(page_id: string) {
   return data;
 }
 
-export async function generateMetadata({ params }): Promise<Metadata> {
-  const data = await getData(params.page_id);
+export async function generateMetadata( params: { params: PageParams}): Promise<Metadata> {
+   
+  const { page_id } = await params.params;
+
+  const data = await getData(page_id);
   
   return {
     title: `Homenagem para ${data.women_name}`,
@@ -28,20 +32,15 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   }
 }
 
-export default async function Page({ params }) {
-  const data = await getData(params.page_id);
+export default async function Page(params: { params: PageParams}) {
+  const { page_id } = await params.params;
 
+  const data = await getData(page_id);
   return (
     <>
       <HeartRain />
       <main className="flex flex-col items-center justify-center min-h-screen">
-        <Message message={data.message} />
-        <ScratchCard
-          imageUrl={data.photo_urls[0]}
-          brushSize={10}
-          height={500}
-          width={300}
-        />
+        <AnimatedText data={data}/>
       </main>
     </>
   );
