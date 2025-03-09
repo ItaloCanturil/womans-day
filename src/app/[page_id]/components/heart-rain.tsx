@@ -1,50 +1,60 @@
-// app/[page_id]/components/heart-rain.tsx
 "use client";
 
-import { useEffect } from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { Heart } from "lucide-react";
+
+type Hearts = {
+	id: number,
+	left: number,
+	delay: number,
+	duration: number,
+	size: number,
+}
+
+const generateHearts = (count: number ): Hearts[] => {
+	return Array.from({ length: count }, (_, i) => ({
+		id: i,
+		left: Math.random() * 100,
+		delay: Math.random() * 5,
+		duration: Math.random() * 4 + 2,
+		size: Math.random() * 30 + 10,
+	}));
+};
 
 export default function HeartRain() {
+	const [hearts, setHearts] = useState<Hearts[]>([]);
+
 	useEffect(() => {
-		const body = document.body;
-		const heartStyles = `
-      @keyframes fall {
-        0% { transform: translateY(-10%); opacity: 0; }
-        100% { transform: translateY(100vh); opacity: 1; }
-      }
-      .heart {
-        position: fixed;
-        font-size: 20px;
-        color: #ff6b6b;
-        animation: fall 5s linear infinite;
-        pointer-events: none;
-      }
-    `;
-
-		// Cria estilo global
-		const style = document.createElement("style");
-		style.textContent = heartStyles;
-		document.head.appendChild(style);
-
-		// Cria corações
-		const createHeart = () => {
-			const heart = document.createElement("div");
-			heart.className = "heart";
-			heart.style.left = Math.random() * 100 + "vw";
-			heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-			heart.textContent = "❤️";
-			body.appendChild(heart);
-
-			// Remove após animação
-			setTimeout(() => heart.remove(), 5000);
-		};
-
-		// Gera chuva
-		const interval = setInterval(createHeart, 200);
-		return () => {
-			clearInterval(interval);
-			body.querySelectorAll(".heart").forEach((el) => el.remove());
-		};
+		const interval = setInterval(() => {
+			setHearts(generateHearts(20));
+		}, 5000);
+		return () => clearInterval(interval);
 	}, []);
 
-	return null;
+	return (
+		<div className="fixed top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+			{hearts.map((heart) => (
+				<motion.div
+					key={heart.id}
+					initial={{ y: "-10vh", opacity: 0 }}
+					animate={{ y: "100vh", opacity: 1 }}
+					exit={{ opacity: 0 }}
+					transition={{
+						duration: heart.duration,
+						delay: heart.delay,
+						ease: "easeIn",
+						repeat: Infinity,
+					}}
+					className="absolute text-red-500"
+					style={{
+						left: `${heart.left}%`,
+						fontSize: `${heart.size}px`,
+					}}
+				>
+					<Heart width={heart.size} height={heart.size} className="text-red-500"></Heart>
+				</motion.div>
+			))}
+		</div>
+	)
 }
