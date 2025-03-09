@@ -84,11 +84,11 @@ const ScratchCard: React.FC<ScratchCardProps> = ({
 
   return (
     <div className="relative" style={{ width, height }}>
-      <Image src={imageUrl} alt="Hidden" className="absolute top-0 left-0 w-full h-full object-cover" width={width} height={height} />
+      <Image src={imageUrl} alt="Hidden" className="absolute top-0 left-0 w-full h-full object-cover rounded-lg" width={width} height={height} />
       {!isScratched && (
         <canvas
           ref={canvasRef}
-          className="absolute top-0 left-0 w-full h-full"
+          className="absolute top-0 left-0 w-full h-full rounded-lg"
         />
       )}
     </div>
