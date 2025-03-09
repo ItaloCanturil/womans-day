@@ -23,6 +23,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
 import { supabaseService } from "@/db/supabase";
+import { useState } from "react";
 
 const createFormSchema = z.object({
 	email: z.string().email({ message: "Email inválido" }),
@@ -39,6 +40,7 @@ type FormSchema = z.infer<typeof createFormSchema>;
 
 export default function CreateForm() {
 	const router = useRouter();
+	const [loading, setLoading] = useState(false);
 
 	const dropZoneConfig = {
 		maxFiles: 3,
@@ -52,6 +54,7 @@ export default function CreateForm() {
 
 	const onSubmit = async (data: FormSchema) => {
 		try {
+			setLoading(true);
 			const photo_urls: string[] = [];
 
 			for (const file of data.photo_url) {
@@ -87,9 +90,11 @@ export default function CreateForm() {
 			if (!response.ok) throw new Error('Erro ao enviar formulário');
 	
 			const responseData = await response.json();
-			router.push(`/confirmacao?page_id=${responseData.page_id}`);
+			router.push(`/confirm?page_id=${responseData.page_id}`);
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -197,7 +202,9 @@ export default function CreateForm() {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit">Criar</Button>
+				<Button type="submit" disabled={loading}>
+					{loading ? 'Criar' : 'Criando...'}
+				</Button>
 			</form>
 		</Form>
 	);
