@@ -203,7 +203,7 @@ export default function CreateForm() {
 					)}
 				/>
 				<Button type="submit" disabled={loading}>
-					{loading ? 'Criar' : 'Criando...'}
+					{loading ? 'Criando...' : 'Criar'}
 				</Button>
 			</form>
 		</Form>

@@ -11,9 +11,9 @@ const Message = ({ message }: MessageProps) => (
     initial={{ opacity: 0, y: 50 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 1, delay: 0.3 }}
-    className="message-container"
+    className="message-container text-center"
   >
-    <p>{message}</p>
+    <p className="">{message}</p>
   </motion.div>
 )
 
