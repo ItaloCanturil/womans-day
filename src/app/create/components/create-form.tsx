@@ -115,6 +115,7 @@ export default function CreateForm() {
 									placeholder="Adicione o nome de uma mulher especial"
 									value={field.value}
 									onChange={e => field.onChange(e)}
+									className="bg-slate-50"
 								/>
 							</FormControl>
 							<FormMessage />
@@ -133,6 +134,7 @@ export default function CreateForm() {
 									placeholder="Adicione email"
 									value={field.value}
 									onChange={e => field.onChange(e)}
+									className="bg-slate-50"
 								/>
 							</FormControl>
 							<FormMessage />
@@ -149,7 +151,7 @@ export default function CreateForm() {
 							<FormControl>
 								<Textarea
 									placeholder="Placeholder"
-									className="resize-none"
+									className="resize-none bg-slate-50"
 									{...field}
 								/>
 							</FormControl>
